@@ -16,6 +16,10 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String,
         required: false
+    },
+    price: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 

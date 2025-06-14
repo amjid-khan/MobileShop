@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 function ProductAdd() {
-  const navegate = useNavigate()
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null); // 👈 image preview
 
   const handleForm = async (e) => {
     e.preventDefault();
@@ -19,14 +20,28 @@ function ProductAdd() {
     formData.append("description", description);
     formData.append("brand", brand);
     formData.append("price", price);
-    formData.append("image", image); 
-    
+    formData.append("image", image);
+
     try {
-        await axios.post("http://localhost:8000/api/product/add", formData)
-        toast.success("Item Added")
-        navegate("/")
+      await axios.post("http://localhost:8000/api/product/add", formData);
+      toast.success("Item Added");
+      navigate("/");
     } catch (error) {
-        console.log("Error")
+      console.log("Error", error);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result); // 👈 preview URL set
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPreview(null);
     }
   };
 
@@ -39,10 +54,18 @@ function ProductAdd() {
           <input
             type="file"
             className="form-control"
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={handleImageChange}
             name="image"
             required
           />
+          {preview && (
+            <img
+              src={preview}
+              alt="Preview"
+              className="mt-2"
+              style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "10px" }}
+            />
+          )}
         </div>
 
         <div className="mb-3">
