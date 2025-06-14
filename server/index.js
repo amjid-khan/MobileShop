@@ -2,12 +2,15 @@
 import express from "express"
 import dotenv from "dotenv"
 import ConnectDB from "./DB/db.js"
-
-dotenv.config()
-
-
+import Router from "./routes/routes.js"
 
 const app = express()
+dotenv.config()
+
+app.use(express.json());
+
+app.use("/product", Router)
+
 
 // connect mongoDB and Listening Server
 ConnectDB().then(() => {
