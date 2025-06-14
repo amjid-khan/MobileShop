@@ -1,11 +1,11 @@
-// src/components/Navbar.js
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
 import {NavLink} from "react-router-dom"
 const Navbar = () => {
-  const cartCount = 1; // You can change this to a dynamic state later
+  const cartCount = 1; 
 
-  return (
+  return  <>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
       <NavLink className="navbar-brand d-flex align-items-center" to="/">
         <img
@@ -35,7 +35,6 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          {/* 🛒 My Cart Link */}
           <li className="nav-item ms-3">
             <a className="nav-link position-relative d-flex align-items-center" href="/cart">
               <i className="bi bi-cart-fill me-1" style={{ fontSize: '1.2rem' }}></i>
@@ -53,7 +52,8 @@ const Navbar = () => {
         </ul>
       </div>
     </nav>
-  );
+    <ToastContainer />
+  </>
 };
 
 export default Navbar;
