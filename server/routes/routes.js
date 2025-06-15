@@ -1,6 +1,7 @@
 import express from "express"
 import Product from "../models/product.models.js";
 import upload from "../config/multer.js";
+import Cart from "../models/cart.models.js";
 
 const Router = express.Router()
 
@@ -28,4 +29,20 @@ Router.get("/view", async (req, res) => {
 })
 
 
+Router.post("/addcart", async (req, res) => {
+    try {
+        const { title, brand, description, price, image, quantity } = req.body;
+        const cartItems = await Cart.create({
+            title,
+            brand,
+            description,
+            price,
+            image,
+            quantity
+        })
+        res.send({ status: 1, msg: "Item Add Successfully", cartItems })
+    } catch (error) {
+        console.log("Cart Error", error)
+    }
+})
 export default Router
