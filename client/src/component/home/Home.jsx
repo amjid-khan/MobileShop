@@ -75,6 +75,7 @@ function Home() {
                 src={`http://localhost:8000/uploads/image/${item.image}`}
                 className="card-img-top rounded-top-4"
                 alt={item.title}
+                onClick={()=> navigate("/viewpage" , {state : item})}
                 style={{ height: "220px", objectFit: "cover" }}
               />
               <div className="card-body d-flex flex-column justify-content-between">
