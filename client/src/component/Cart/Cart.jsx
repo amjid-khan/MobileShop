@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom"
 
 function Cart() {
+  const navigate = useNavigate()
   const [cart, setCart] = useState([]);
-
   const getCartData = () => {
     axios
       .get("http://localhost:8000/api/product/addcartview")
@@ -70,7 +71,7 @@ function Cart() {
                     <p className="mb-1 text-muted">Brand: {item.brand}</p>
                     <p className="mb-1">Qty: {item.quantity}</p>
                     <p className="fw-bold text-success mb-0">
-                      Rs. {item.price}
+                      ${item.price}
                     </p>
                   </div>
                 </div>
@@ -93,7 +94,7 @@ function Cart() {
               </p>
               <p className="d-flex justify-content-between fw-semibold">
                 <span>Total Price:</span>
-                <span className="text-success">Rs. {totalPrice()}</span>
+                <span className="text-success">${totalPrice()}</span>
               </p>
               <hr />
               <h6 className="mt-3">Select Payment Method</h6>
@@ -102,7 +103,7 @@ function Cart() {
                 <option value="card">Credit/Debit Card</option>
                 <option value="easypaisa">Easypaisa / JazzCash</option>
               </select>
-              <button className="btn btn-primary w-100 rounded-pill mt-2">
+              <button onClick={() => navigate("/payment")} className="btn btn-primary w-100 rounded-pill mt-2">
                 Proceed to Payment
               </button>
             </div>
