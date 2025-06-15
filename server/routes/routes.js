@@ -56,4 +56,24 @@ Router.get("/addcartview", async (req, res) => {
     })
     res.send(Result)
 })
+
+Router.delete("/deletecart/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const DeleteItem = await Cart.deleteOne({ _id: id });
+
+        res.send({
+            status: 1,
+            msg: "Deleted Successfully",
+            DeleteItem,
+        });
+    } catch (err) {
+        res.status(500).send({
+            status: 0,
+            msg: "Error while deleting",
+            error: err.message,
+        });
+    }
+});
+
 export default Router

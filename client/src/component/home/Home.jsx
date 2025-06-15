@@ -37,7 +37,6 @@ function Home() {
     .post("http://localhost:8000/api/product/addcart", cartItem)
     .then((res) => {
       console.log("Saved to DB:", res.data);
-      navigate("/cart" , {state : item})
       toast.success("Item Added Successfully")
     })
     .catch((err) => {
