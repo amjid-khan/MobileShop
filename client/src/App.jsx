@@ -7,6 +7,7 @@ import Navbar from './component/Navbar/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import View from './component/viewpage/View';
 import Payment from './component/paymet/Payment';
+import Footer from './component/footer/Footer';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path='/viewpage' element={<View />} />
         <Route path='/payment' element={<Payment />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

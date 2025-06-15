@@ -6,3 +6,12 @@
 .item{
   border: 1px solid black;
 }
+body {
+  background: linear-gradient(to right, #e0f7fa, #f0f4c3);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-attachment: fixed;
+  background-size: cover;
+}

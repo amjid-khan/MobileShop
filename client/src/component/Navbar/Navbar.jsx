@@ -67,32 +67,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Brand Filter Panel */}
-      {location.pathname === '/' && (
-        <div className="container py-3">
-          <div className="bg-white rounded-3 shadow-sm p-3 d-flex flex-wrap gap-4 align-items-center justify-content-center">
-            {brands.map((brand) => (
-              <div key={brand} className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="brand"
-                  id={`brand-${brand.toLowerCase()}`}
-                  value={brand}
-                  checked={selectedBrand === brand}
-                  onChange={() => setSelectedBrand(brand)}
-                />
-                <label
-                  className="form-check-label fw-semibold text-secondary"
-                  htmlFor={`brand-${brand.toLowerCase()}`}
-                >
-                  {brand}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+    
 
       <ToastContainer />
     </>

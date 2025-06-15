@@ -1,0 +1,8 @@
+footer a:hover {
+  text-decoration: underline;
+  color: #f8f9fa;
+}
+
+footer h5, footer h6 {
+  color: #ffffff;
+}

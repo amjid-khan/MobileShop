@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [cart, setCart] = useState([]);
+
   const getCartData = () => {
     axios
       .get("http://localhost:8000/api/product/addcartview")
       .then((res) => {
-        console.log("Cart API Response:", res.data);
         setCart(res.data.viewCartData || []);
       })
       .catch((err) => {
@@ -33,12 +33,21 @@ function Cart() {
   }, []);
 
   const totalPrice = () => {
-    let sum = 0
-    cart.forEach((item) => {
-      sum += Number(item.price)
-    })
-    return sum
-  }
+    return cart.reduce((sum, item) => sum + Number(item.price), 0);
+  };
+
+  // Soft color palette
+  const colorPalette = [
+    "#fefcea", "#f0f8ff", "#f0fff0", "#fffaf0", "#fff0f5", "#f9f9f9", "#e6f7ff",
+  ];
+
+  // Background generator using item ID or title
+  const getBackgroundColor = (key) => {
+    const hash = key
+      .split("")
+      .reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    return colorPalette[hash % colorPalette.length];
+  };
 
   return (
     <div className="container py-5">
@@ -49,40 +58,42 @@ function Cart() {
         <div className="row">
           {/* LEFT SIDE - CART ITEMS */}
           <div className="col-md-8">
-            {cart.map((item) => (
-              <div
-                key={item._id}
-                className="d-flex align-items-center justify-content-between border rounded-4 p-3 mb-3 shadow-sm"
-              >
-                <div className="d-flex align-items-center gap-3">
-                  <img
-                    src={`http://localhost:8000/uploads/image/${item.image}`}
-                    alt={item.title}
-                    className="img-fluid"
-                    style={{
-                      height: "100px",
-                      width: "100px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <div>
-                    <h5 className="mb-1">{item.title}</h5>
-                    <p className="mb-1 text-muted">Brand: {item.brand}</p>
-                    <p className="mb-1">Qty: {item.quantity}</p>
-                    <p className="fw-bold text-success mb-0">
-                      ${item.price}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => handleRemove(item._id)}
-                  className="btn btn-outline-danger"
+            {cart.map((item) => {
+              const bgColor = getBackgroundColor(item._id || item.title || "x");
+              return (
+                <div
+                  key={item._id}
+                  className="d-flex align-items-center justify-content-between border rounded-4 p-3 mb-3 shadow-sm"
+                  style={{ backgroundColor: bgColor }}
                 >
-                  Remove
-                </button>
-              </div>
-            ))}
+                  <div className="d-flex align-items-center gap-3">
+                    <img
+                      src={`http://localhost:8000/uploads/image/${item.image}`}
+                      alt={item.title}
+                      className="img-fluid"
+                      style={{
+                        height: "100px",
+                        width: "100px",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <div>
+                      <h5 className="mb-1">{item.title}</h5>
+                      <p className="mb-1 text-muted">Brand: {item.brand}</p>
+                      <p className="mb-1">Qty: {item.quantity}</p>
+                      <p className="fw-bold text-success mb-0">${item.price}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleRemove(item._id)}
+                    className="btn btn-outline-danger"
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+            })}
           </div>
 
           {/* RIGHT SIDE - PAYMENT SUMMARY */}
@@ -103,7 +114,10 @@ function Cart() {
                 <option value="card">Credit/Debit Card</option>
                 <option value="easypaisa">Easypaisa / JazzCash</option>
               </select>
-              <button onClick={() => navigate("/payment")} className="btn btn-primary w-100 rounded-pill mt-2">
+              <button
+                onClick={() => navigate("/payment")}
+                className="btn btn-primary w-100 rounded-pill mt-2"
+              >
                 Proceed to Payment
               </button>
             </div>
