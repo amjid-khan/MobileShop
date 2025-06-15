@@ -1,20 +1,12 @@
-.home-bg {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.product-card {
   transition: all 0.3s ease;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
 }
-
-.glass-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
-}
-
-.text-shadow {
-  text-shadow: 1px 1px 4px #000;
+.clamp-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

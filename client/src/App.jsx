@@ -6,6 +6,7 @@ import Home from './component/home/Home';
 import Navbar from './component/Navbar/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import View from './component/viewpage/View';
+import Payment from './component/paymet/Payment';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='product' element={<ProductAdd />} /> 
         <Route path='/cart' element={<Cart />} />
         <Route path='/viewpage' element={<View />} />
+        <Route path='/payment' element={<Payment />} />
       </Routes>
     </Router>
   );
