@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
     setCartCount(cartItems.length);
   }, []);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (query.trim()) {
+        navigate(`/search?q=${query}`);
+      } else {
+        navigate("/");
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [query, navigate]);
 
   return (
     <>
@@ -33,16 +48,28 @@ const Navbar = () => {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarNav">
+            {/* 🔍 Search Bar */}
             <form
               className="mx-auto position-relative w-50"
+              onSubmit={(e) => e.preventDefault()}
             >
               <input
                 type="search"
                 className="form-control"
-                id="search"
                 placeholder="Search for mobiles..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
               />
-              <i className="bi bi-search search-icon"></i>
+              <i
+                className="bi bi-search"
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  color: "gray",
+                }}
+              ></i>
             </form>
 
             {/* Nav Links */}

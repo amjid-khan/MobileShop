@@ -95,4 +95,26 @@ Router.post("/contact", async (req, res) => {
     }
 })
 
+// Search products by title (or part of title)
+Router.get("/search", async (req, res) => {
+    try {
+        const keyword = req.query.q || "";
+        const result = await Product.find({
+            title: { $regex: keyword, $options: "i" }, // case-insensitive
+        });
+        res.send({
+            status: 1,
+            msg: "Search Results",
+            result,
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 0,
+            msg: "Search Failed",
+            error: error.message,
+        });
+    }
+});
+
+
 export default Router
