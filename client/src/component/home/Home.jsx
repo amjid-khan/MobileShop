@@ -182,6 +182,7 @@ function Home() {
 
                     <button
                       onClick={() => handleCart(item)}
+                      id="cartBtn"
                       style={{
                         backgroundColor: "#000",
                         color: "#fff",
@@ -193,12 +194,6 @@ function Home() {
                         transition: "all 0.3s ease",
                         cursor: "pointer",
                       }}
-                      onMouseEnter={(e) =>
-                        (e.target.style.backgroundColor = "#222")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.target.style.backgroundColor = "#000")
-                      }
                     >
                       Add to Cart
                     </button>

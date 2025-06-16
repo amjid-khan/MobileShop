@@ -47,6 +47,15 @@ body {
   cursor: pointer;
 }
 .Heading{
-  color: #0d6efd;
+  color: black;
   font-weight: 600;
+}
+#cartBtn {
+  background: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.3s ease;
 }

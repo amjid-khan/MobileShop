@@ -36,12 +36,11 @@ function Cart() {
     return cart.reduce((sum, item) => sum + Number(item.price), 0);
   };
 
-  // Soft color palette
+
   const colorPalette = [
     "#fefcea", "#f0f8ff", "#f0fff0", "#fffaf0", "#fff0f5", "#f9f9f9", "#e6f7ff",
   ];
 
-  // Background generator using item ID or title
   const getBackgroundColor = (key) => {
     const hash = key
       .split("")
@@ -69,6 +68,7 @@ function Cart() {
                   <div className="d-flex align-items-center gap-3">
                     <img
                       src={`http://localhost:8000/uploads/image/${item.image}`}
+                      onClick={()=> navigate("/viewpage" , {state : item})}
                       alt={item.title}
                       className="img-fluid"
                       style={{
@@ -76,6 +76,7 @@ function Cart() {
                         width: "100px",
                         objectFit: "cover",
                         borderRadius: "8px",
+                        cursor : "pointer"
                       }}
                     />
                     <div>
