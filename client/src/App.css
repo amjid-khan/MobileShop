@@ -15,3 +15,38 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+#search {
+  background-color: #2c2c2c;
+  color: white;
+  border: 1px solid blue;
+  padding: 10px 20px 10px 45px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  width: 100%;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+#search::placeholder {
+  color: #ccc;
+}
+
+#search:focus {
+  outline: none;
+  background-color: #2c2c2c;
+  box-shadow: 0 0 0 2px #0d6efd;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: white; 
+  cursor: pointer;
+}
+.Heading{
+  color: #0d6efd;
+  font-weight: 600;
+}

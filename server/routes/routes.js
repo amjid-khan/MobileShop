@@ -2,6 +2,7 @@ import express from "express"
 import Product from "../models/product.models.js";
 import upload from "../config/multer.js";
 import Cart from "../models/cart.models.js";
+import Contact from "../models/contact.models.js";
 import { status } from "init";
 
 const Router = express.Router()
@@ -75,5 +76,23 @@ Router.delete("/deletecart/:id", async (req, res) => {
         });
     }
 });
+
+Router.post("/contact", async (req, res) => {
+    try {
+        let { name, email, message } = req.body
+        const Result = await Contact.create({
+            name,
+            email,
+            message
+        })
+        res.send({
+            status: 1,
+            msg: "Your message send successfully",
+            Result
+        })
+    } catch (error) {
+        res.send("Error while contacting")
+    }
+})
 
 export default Router

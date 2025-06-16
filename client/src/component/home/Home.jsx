@@ -21,7 +21,6 @@ function Home() {
       .catch((err) => console.log("Error:", err));
   }, []);
 
-  // Persist selected brand in localStorage
   const handleBrandChange = (brand) => {
     setSelectedBrand(brand);
     localStorage.setItem("selectedBrand", brand);
@@ -64,6 +63,7 @@ function Home() {
 
   return (
     <>
+      {/* Brand Filter Section */}
       <div className="container mt-4">
         <div
           className="d-flex flex-wrap justify-content-between gap-3 p-3 rounded-3 bg-white shadow-sm"
@@ -90,6 +90,13 @@ function Home() {
           ))}
         </div>
       </div>
+      {selectedBrand && (
+        <div className="container mt-3">
+          <h4 className="fw-bold text-primary text-center">
+            {selectedBrand} Mobiles
+          </h4>
+        </div>
+      )}
 
       {/* Product Cards */}
       <div className="container mt-4">
@@ -114,30 +121,28 @@ function Home() {
                     boxShadow: "none",
                   }}
                 >
+                  {/* Image */}
                   <div
-                    className="col-4 p-0 position-relative"
-                    style={{ cursor: "pointer" }}
+                    className="col-4 p-0 position-relative d-flex align-items-center justify-content-center"
+                    style={{ cursor: "pointer", backgroundColor: "#fff" }}
                     onClick={() => navigate("/viewpage", { state: item })}
                   >
-                   <img
-  src={`http://localhost:8000/uploads/image/${item.image}`}
-  alt={item.title}
-  style={{
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "center",
-    borderRadius: "8px 0 0 8px",
-    display: "block",
-  }}
-/>
-
-
+                    <img
+                      src={`http://localhost:8000/uploads/image/${item.image}`}
+                      alt={item.title}
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        objectFit: "contain",
+                        borderRadius: "8px 0 0 8px",
+                      }}
+                    />
                     <span className="position-absolute top-0 end-0 m-2 badge bg-success">
                       ★ 4.5
                     </span>
                   </div>
 
+                  {/* Content */}
                   <div className="col-8 p-3 d-flex flex-column justify-content-between">
                     <div>
                       <h5 className="fw-semibold text-dark mb-1">

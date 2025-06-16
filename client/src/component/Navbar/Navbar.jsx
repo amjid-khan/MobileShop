@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [cartCount, setCartCount] = useState(0);
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const location = useLocation();
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
     setCartCount(cartItems.length);
   }, []);
-
-  const brands = ["Apple", "Samsung", "Vivo", "Oppo", "Infinix", "Huawei"];
 
   return (
     <>
@@ -23,12 +19,7 @@ const Navbar = () => {
             className="navbar-brand d-flex align-items-center fw-bold text-primary"
             to="/"
           >
-            <img
-              src="https://img.icons8.com/color/48/000000/smartphone-tablet.png"
-              alt="Logo"
-              height="36"
-              className="me-2"
-            />
+            <i className="bi bi-phone-fill fs-4 me-2 text-primary"></i>
             MobileShop
           </NavLink>
 
@@ -37,25 +28,42 @@ const Navbar = () => {
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div
-            className="collapse navbar-collapse justify-content-end"
-            id="navbarNav"
-          >
-            <ul className="navbar-nav align-items-center gap-3">
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <form
+              className="mx-auto position-relative w-50"
+            >
+              <input
+                type="search"
+                className="form-control"
+                id="search"
+                placeholder="Search for mobiles..."
+              />
+              <i className="bi bi-search search-icon"></i>
+            </form>
+
+            {/* Nav Links */}
+            <ul className="navbar-nav ms-auto align-items-center gap-3 mt-3 mt-lg-0">
               <li className="nav-item">
                 <NavLink
                   className="nav-link text-white fw-semibold d-flex align-items-center"
                   to="/product"
                 >
-                  <i className="bi bi-plus-circle me-1 text-white"></i> Add
-                  Product
+                  <i className="bi bi-plus-square me-1 text-white"></i>
+                  Add Product
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link text-white fw-semibold d-flex align-items-center"
+                  to="/contact"
+                >
+                  <i className="bi bi-envelope me-1 text-white"></i>
+                  Contact
                 </NavLink>
               </li>
 
@@ -64,7 +72,8 @@ const Navbar = () => {
                   className="nav-link text-white fw-semibold d-flex align-items-center"
                   to="/cart"
                 >
-                  <i className="bi bi-cart-fill me-1 text-white"></i> My Cart
+                  <i className="bi bi-bag-check-fill me-1 text-white"></i>
+                  My Cart
                   {cartCount > 0 && (
                     <span
                       className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"

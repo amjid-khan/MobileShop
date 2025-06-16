@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import View from './component/viewpage/View';
 import Payment from './component/paymet/Payment';
 import Footer from './component/footer/Footer';
+import ContactForm from './component/contact/Contact';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path='/cart' element={<Cart />} />
         <Route path='/viewpage' element={<View />} />
         <Route path='/payment' element={<Payment />} />
+        <Route path="/contact" element={<ContactForm />} />
       </Routes>
       <Footer />
     </Router>
