@@ -10,6 +10,7 @@ import Payment from './component/paymet/Payment';
 import Footer from './component/footer/Footer';
 import ContactForm from './component/contact/Contact';
 import SearchResults from './component/search/Search';
+import About from './component/About/About';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/payment' element={<Payment />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path='/about' element={<About />} />
       </Routes>
       <Footer />
     </Router>

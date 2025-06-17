@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const SearchResults = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,7 +16,6 @@ const SearchResults = () => {
       axios
         .get(`http://localhost:8000/api/product/search?q=${query}`)
         .then((res) => {
-          console.log("API Response:", res.data);
           setResults(res.data.result);
           setLoading(false);
         })
@@ -24,6 +25,25 @@ const SearchResults = () => {
         });
     }
   }, [query]);
+
+  const handleCart = (item) => {
+    const cartItem = {
+      title: item.title,
+      brand: item.brand,
+      description: item.description,
+      image: item.image,
+      quantity: 1,
+      price: item.price,
+    };
+
+    axios
+      .post("http://localhost:8000/api/product/addcart", cartItem)
+      .then(() => toast.success("Item added to cart!"))
+      .catch((err) => {
+        console.error("Add to cart error:", err);
+        toast.error("Failed to add to cart");
+      });
+  };
 
   return (
     <div className="container mt-5">
@@ -37,31 +57,46 @@ const SearchResults = () => {
         <p>No matching products found.</p>
       ) : (
         <div className="row">
-          {results.map((item) => {
-            console.log("Image Path:", item.image); 
-            return (
-              <div className="col-md-4 mb-4" key={item._id}>
-                <div className="card h-100">
-                  <img
-                    src={`http://localhost:8000/uploads/image/${item.image}`}
-                    className="card-img-top"
-                    alt={item.title}
-                    style={{ height: "250px", objectFit: "contain" }}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{item.title}</h5>
-                    <p className="card-text">{item.description}</p>
-                    <p>
-                      <strong>Brand:</strong> {item.brand}
-                    </p>
-                    <p>
-                      <strong>Price:</strong> ${item.price}
-                    </p>
-                  </div>
+          {results.map((item) => (
+            <div className="col-md-4 mb-4" key={item._id}>
+              <div className="card h-100 shadow-sm border-0 rounded-4">
+                <img
+                  src={`http://localhost:8000/uploads/image/${item.image}`}
+                  className="card-img-top p-3"
+                  alt={item.title}
+                  onClick={() => navigate("/viewpage", { state: item })}
+                  style={{
+                    height: "250px",
+                    objectFit: "contain",
+                    borderRadius: "1rem",
+                    cursor: "pointer",
+                  }}
+                />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title fw-semibold">{item.title}</h5>
+                  <p className="text-muted small">{item.description}</p>
+                  <p className="mb-1">
+                    <strong>Brand:</strong> {item.brand}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Price:</strong> ${item.price}
+                  </p>
+
+                  <button
+                    onClick={() => handleCart(item)}
+                    className="btn btn-dark mt-auto w-100"
+                    style={{
+                      borderRadius: "10px",
+                      fontWeight: "600",
+                      padding: "10px",
+                    }}
+                  >
+                    Add to Cart
+                  </button>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       )}
     </div>

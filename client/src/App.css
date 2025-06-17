@@ -77,3 +77,14 @@ body {
 input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
+
+.clamp-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.form-check-input,
+.form-check-label {
+  cursor: pointer;
+}

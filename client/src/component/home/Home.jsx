@@ -91,8 +91,19 @@ function Home() {
         </div>
       </div>
       {selectedBrand && (
-        <div className="container mt-3">
-          <h4 className="fw-bold text-primary text-center">
+        <div
+          className="d-flex justify-content-center align-items-center shadow-sm rounded-3"
+          style={{
+            backgroundColor: "#fff",
+            width: "50vh",
+            marginTop: "2rem",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.08)",
+            marginLeft: "auto",
+            marginRight: "auto",
+            padding : "10px 10px"
+          }}
+        >
+          <h4 className="fw-bold text-primary text-center m-0">
             {selectedBrand} Mobiles
           </h4>
         </div>
@@ -100,100 +111,86 @@ function Home() {
 
       {/* Product Cards */}
       <div className="container mt-4">
-        <div className="row g-4 m-0">
-          {filteredView.map((item, index) => {
-            const bgColors = [
-              "linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)",
-              "linear-gradient(135deg, #fefcea 0%, #f1da36 100%)",
-              "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
-              "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)",
-              "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
-            ];
+        <div className="row">
+          {filteredView.map((item) => {
+            const qty = quantity[item._id] || 1;
+            const discountPercent = item.discount || 10; // 👈 use real data if available
+            const originalPrice = item.price * qty;
+            const discountAmount = (originalPrice * discountPercent) / 100;
+            const finalPrice = originalPrice - discountAmount;
 
             return (
-              <div key={item._id} className="col-12 col-lg-6">
-                <div
-                  className="card product-card flex-row rounded-4 overflow-hidden"
-                  style={{
-                    background: bgColors[index % bgColors.length],
-                    height: "220px",
-                    border: "none",
-                    boxShadow: "none",
-                  }}
-                >
-                  {/* Image */}
+              <div key={item._id} className="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div className="card h-100 shadow border-0 rounded-4 overflow-hidden">
                   <div
-                    className="col-4 p-0 position-relative d-flex align-items-center justify-content-center"
-                    style={{ cursor: "pointer", backgroundColor: "#fff" }}
                     onClick={() => navigate("/viewpage", { state: item })}
+                    style={{ cursor: "pointer" }}
                   >
                     <img
                       src={`http://localhost:8000/uploads/image/${item.image}`}
                       alt={item.title}
+                      className="card-img-top p-3 bg-white"
                       style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
+                        height: "230px",
                         objectFit: "contain",
-                        borderRadius: "8px 0 0 8px",
+                        borderRadius: "1rem",
                       }}
                     />
-                    <span className="position-absolute top-0 end-0 m-2 badge bg-success">
-                      ★ 4.5
-                    </span>
                   </div>
+                  <div className="card-body d-flex flex-column">
+                    <h6 className="text-secondary fw-semibold mb-1">
+                      {item.brand}
+                    </h6>
+                    <h5 className="text-dark fw-bold">{item.title}</h5>
+                    <p className="text-muted small clamp-description mb-2">
+                      {item.description}
+                    </p>
 
-                  {/* Content */}
-                  <div className="col-8 p-3 d-flex flex-column justify-content-between">
-                    <div>
-                      <h5 className="fw-semibold text-dark mb-1">
-                        {item.brand}
-                      </h5>
-                      <p className="text-muted small mb-1">{item.title}</p>
-                      <p className="text-secondary small clamp-description mb-3">
-                        {item.description}
-                      </p>
-                    </div>
-
+                    {/* Price section */}
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <div className="btn-group shadow-sm">
-                        <button
-                          className="btn btn-outline-secondary btn-sm"
-                          onClick={() => handleDecrease(item._id)}
-                        >
-                          −
-                        </button>
-                        <button
-                          className="btn btn-light btn-sm fw-bold"
-                          disabled
-                        >
-                          {quantity[item._id] || 1}
-                        </button>
-                        <button
-                          className="btn btn-outline-secondary btn-sm"
-                          onClick={() => handleIncrease(item._id)}
-                        >
-                          +
-                        </button>
+                      <div className="text-start">
+                        <span className="fw-bold text-success me-2">
+                          ${finalPrice.toFixed(2)}
+                        </span>
+                        <small className="text-muted text-decoration-line-through">
+                          ${originalPrice.toFixed(2)}
+                        </small>
                       </div>
-                      <span className="fw-bold text-success">
-                        ${item.price * (quantity[item._id] || 1)}
+                      <span className="badge bg-danger">
+                        {discountPercent}% OFF
                       </span>
                     </div>
 
+                    {/* Quantity control */}
+                    <div className="btn-group btn-group-sm mb-3 shadow-sm">
+                      <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => handleDecrease(item._id)}
+                      >
+                        −
+                      </button>
+                      <button className="btn btn-light fw-bold" disabled>
+                        {qty}
+                      </button>
+                      <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => handleIncrease(item._id)}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    {/* Add to Cart */}
                     <button
-                      onClick={() => handleCart(item)}
-                      id="cartBtn"
+                      className="btn btn-dark w-100 mt-auto fw-semibold"
                       style={{
-                        backgroundColor: "#000",
-                        color: "#fff",
-                        border: "none",
-                        padding: "8px 16px",
-                        borderRadius: "8px",
-                        fontWeight: "600",
-                        alignSelf: "flex-end",
+                        borderRadius: "12px",
+                        padding: "10px 16px",
+                        fontSize: "15px",
+                        letterSpacing: "0.5px",
                         transition: "all 0.3s ease",
-                        cursor: "pointer",
                       }}
+                      onClick={() => handleCart(item)}
                     >
                       Add to Cart
                     </button>

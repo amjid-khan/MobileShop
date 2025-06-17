@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [cartCount, setCartCount] = useState(0);
   const [query, setQuery] = useState("");
+  const [prevPath, setPrevPath] = useState("/");
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -16,26 +19,55 @@ const Navbar = () => {
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
+      const isSearchPage = location.pathname.startsWith("/search");
+
       if (query.trim()) {
-        navigate(`/search?q=${query}`);
+        if (
+          !isSearchPage &&
+          !location.pathname.startsWith("/viewpage") &&
+          location.pathname !== "/about" &&
+          location.pathname !== "/contact" &&
+          location.pathname !== "/product" &&
+          location.pathname !== "/cart"
+        ) {
+          setPrevPath(location.pathname);
+          navigate(`/search?q=${query}`);
+        }
       } else {
-        navigate("/");
+        if (isSearchPage) {
+          navigate(prevPath);
+        }
       }
     }, 500);
 
     return () => clearTimeout(delayDebounce);
-  }, [query, navigate]);
+  }, [query, location.pathname]);
+
+  useEffect(() => {
+    const allowQueryPreserve = ["/search", "/viewpage"];
+    const shouldClearQuery = !allowQueryPreserve.some((path) =>
+      location.pathname.startsWith(path)
+    );
+
+    if (shouldClearQuery) {
+      setQuery("");
+    }
+  }, [location.pathname]);
 
   return (
     <>
       <nav className="navbar navbar-expand-lg shadow-sm px-4 py-3 bg-black border-bottom sticky-top">
         <div className="container-fluid">
+          {/* Modern Logo */}
           <NavLink
-            className="navbar-brand d-flex align-items-center fw-bold text-primary"
+            className="navbar-brand d-flex align-items-center text-white fw-bold fs-4"
             to="/"
+            style={{ letterSpacing: "1px" }}
           >
-            <i className="bi bi-phone-fill fs-4 me-2 text-primary"></i>
-            MobileShop
+            <i className="bi bi-phone-flip fs-3 me-2 text-primary"></i>
+            <span>
+              Mobile<span className="text-primary">Shop</span>
+            </span>
           </NavLink>
 
           <button
@@ -48,7 +80,7 @@ const Navbar = () => {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarNav">
-            {/* 🔍 Search Bar */}
+            {/* Search Bar - clean professional */}
             <form
               className="mx-auto position-relative w-50"
               onSubmit={(e) => e.preventDefault()}
@@ -77,9 +109,19 @@ const Navbar = () => {
               <li className="nav-item">
                 <NavLink
                   className="nav-link text-white fw-semibold d-flex align-items-center"
+                  to="/about"
+                >
+                  <i className="bi bi-info-circle me-2 fs-5 text-primary"></i>
+                  About
+                </NavLink>
+              </li>
+
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link text-white fw-semibold d-flex align-items-center"
                   to="/product"
                 >
-                  <i className="bi bi-plus-square me-1 text-white"></i>
+                  <i className="bi bi-plus-square me-2 fs-5 text-success"></i>
                   Add Product
                 </NavLink>
               </li>
@@ -89,7 +131,7 @@ const Navbar = () => {
                   className="nav-link text-white fw-semibold d-flex align-items-center"
                   to="/contact"
                 >
-                  <i className="bi bi-envelope me-1 text-white"></i>
+                  <i className="bi bi-envelope-fill me-2 fs-5 text-warning"></i>
                   Contact
                 </NavLink>
               </li>
@@ -99,7 +141,7 @@ const Navbar = () => {
                   className="nav-link text-white fw-semibold d-flex align-items-center"
                   to="/cart"
                 >
-                  <i className="bi bi-bag-check-fill me-1 text-white"></i>
+                  <i className="bi bi-bag-check-fill me-2 fs-5 text-danger"></i>
                   My Cart
                   {cartCount > 0 && (
                     <span
