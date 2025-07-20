@@ -104,7 +104,7 @@ function View() {
               Brand: <strong>{item.brand}</strong>
             </h5>
             <p className="fs-5 text-success fw-semibold mb-2">
-              Price: Rs. {item.price}
+              ${item.price}
             </p>
             <p className="text-muted mb-3" style={{ lineHeight: "1.6" }}>
               {item.description}

@@ -5,3 +5,31 @@
 .nav-link:hover {
   color: #0d6efd !important;
 }
+.menu{
+  color: white;
+  font-size: 30px;
+  display: none;
+}
+
+@media (max-width: 1050px) {
+  .nav-links-container {
+    width: 100%;
+    background: #000;
+    padding: 1rem 0;
+  }
+
+  .nav-links-container ul {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.75rem;
+    padding-left: 1.5rem;
+  }
+
+  .nav-links-container form {
+    padding: 0 1.5rem;
+  }
+
+  .navbar-nav .nav-link {
+    padding-left: 0.5rem;
+  }
+}

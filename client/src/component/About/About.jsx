@@ -3,13 +3,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const About = () => {
   return (
-    <div style={{ background: "#f8f9fa", padding: "50px 20px" }}>
+    <div style={{ background: "transparent", padding: "50px 20px" }}>
       <div className="container">
-        {/* Owner Section First */}
+        {/* Owner Section */}
         <div
-          className="row bg-white shadow rounded-4 p-4 p-md-5 mb-5"
+          className="row shadow rounded-4 p-4 p-md-5 mb-5"
           style={{
-            background: "linear-gradient(to right, #ffffff, #f0f4f8)",
+            background: "transparent",
             minHeight: "400px",
             alignItems: "stretch",
           }}
@@ -18,7 +18,7 @@ const About = () => {
           <div className="col-md-6 d-flex flex-column justify-content-center">
             <div>
               <h2 className="fw-bold text-dark">Meet Our Founder</h2>
-              <h4 className="text-primary fw-semibold mb-3">Ali Khan</h4>
+              <h4 className="text-primary fw-semibold mb-3">Amjid Kurmywal</h4>
               <p
                 style={{
                   fontSize: "1.05rem",
@@ -26,7 +26,7 @@ const About = () => {
                   lineHeight: "1.7",
                 }}
               >
-                Ali Khan, the visionary behind <strong>MobileShop</strong>, has
+                Amjid Kurmywal, the visionary behind <strong>MobileShop</strong>, has
                 over 10 years of experience in the mobile retail industry. With
                 a passion for technology and a deep understanding of customer
                 needs, he founded MobileShop to make premium smartphones more
@@ -50,23 +50,24 @@ const About = () => {
                 boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               }}
             >
-           <img
-  src="/images/ak.jpg"
-  alt="Owner"
-  style={{
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-  }}
-/>
-
-
+              <img
+                src="/images/ak.jpg"
+                alt="Owner"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
             </div>
           </div>
         </div>
 
         {/* About MobileShop Section */}
-        <div className="bg-white p-4 p-md-5 shadow rounded-4 mb-5">
+        <div
+          className="p-4 p-md-5 shadow rounded-4 mb-5"
+          style={{ background: "transparent" }}
+        >
           <h1 className="text-center mb-3 fw-bold">
             About <span className="text-primary">MobileShop</span>
           </h1>
