@@ -16,7 +16,7 @@ function Home() {
   
 useEffect(() => {
   axios
-    .get(`${import.meta.env.VITE_API_BASE_URL}/product/view`)
+    .get("http://localhost:8000/api/product/view")
     .then((res) => setView(res.data.viewData))
     .catch((err) => console.log("Error:", err));
 }, []);
